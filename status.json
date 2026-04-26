@@ -1,7 +1,7 @@
 {
   "available": true,
   "banner": {
-    "active": false,
-    "text": "Hello ! Je m'appelle Olivier et je suis basé à Fribourg !"
+    "active": true,
+    "text": "Hello ! Je m'appelle Olivier et je suis basÃ© Ã  Fribourg !"
   }
 }
