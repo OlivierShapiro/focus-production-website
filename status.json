@@ -1,1 +1,7 @@
-{"available":true}
+{
+  "available": true,
+  "banner": {
+    "active": false,
+    "text": ""
+  }
+}
