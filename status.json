@@ -1,3 +1,7 @@
 {
-  "available": false
+  "available": false,
+  "banner": {
+    "active": true,
+    "text": "OU t'ai bb je t'ai manqué ce n'est pas possible de te retrouver !"
+  }
 }
