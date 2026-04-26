@@ -1,7 +1,3 @@
 {
-  "available": true,
-  "banner": {
-    "active": false,
-    "text": ""
-  }
+  "available": false
 }
