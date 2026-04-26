@@ -1893,31 +1893,36 @@
     /* ── Bannière d'annonce ── */
     #site-banner {
       display: none;
-      width: 100%;
-      background: rgba(200,169,110,0.1);
-      border-bottom: 1px solid rgba(200,169,110,0.25);
-      padding: 10px 48px;
-      text-align: center;
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
+      position: fixed;
+      top: 72px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+      background: rgba(8,8,8,0.92);
+      border: 1px solid rgba(200,169,110,0.35);
+      backdrop-filter: blur(12px);
+      padding: 9px 20px 9px 20px;
+      white-space: nowrap;
+      max-width: 90vw;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #site-banner.visible { display: flex; align-items: center; gap: 10px; }
+    #banner-msg {
+      font-size: 0.74rem;
+      letter-spacing: 0.1em;
       color: #c8a96e;
-      position: relative;
-      z-index: 99;
     }
-    #site-banner.visible { display: block; }
-    #site-banner span { opacity: 0.6; margin: 0 12px; }
     #banner-close {
-      position: absolute;
-      right: 20px; top: 50%;
-      transform: translateY(-50%);
       background: none; border: none;
-      color: #c8a96e; cursor: pointer;
-      font-size: 1rem; opacity: 0.6;
-      line-height: 1;
+      color: rgba(200,169,110,0.5); cursor: pointer;
+      font-size: 1rem; line-height: 1;
+      padding: 0; flex-shrink: 0;
+      transition: color 0.2s;
     }
-    #banner-close:hover { opacity: 1; }
+    #banner-close:hover { color: #c8a96e; }
     @media (max-width: 768px) {
-      #site-banner { padding: 10px 40px 10px 16px; font-size: 0.7rem; text-align: left; }
+      #site-banner { top: 60px; max-width: 85vw; }
     }
   </style>
 </head>
@@ -1929,9 +1934,7 @@
 
   <!-- BANNIÈRE -->
   <div id="site-banner">
-    <span id="banner-sep">·</span>
     <span id="banner-msg"></span>
-    <span id="banner-sep2">·</span>
     <button id="banner-close" onclick="document.getElementById('site-banner').classList.remove('visible')" aria-label="Fermer">×</button>
   </div>
 
