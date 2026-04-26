@@ -1889,6 +1889,36 @@
     .nav-availability.unavailable { border-color: rgba(224,92,92,0.3); }
     .nav-availability.unavailable .nav-avail-dot { background: #e05c5c; box-shadow: 0 0 6px #e05c5c; animation: none; }
     .nav-availability.unavailable { color: #e05c5c; }
+
+    /* ── Bannière d'annonce ── */
+    #site-banner {
+      display: none;
+      width: 100%;
+      background: rgba(200,169,110,0.1);
+      border-bottom: 1px solid rgba(200,169,110,0.25);
+      padding: 10px 48px;
+      text-align: center;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      color: #c8a96e;
+      position: relative;
+      z-index: 99;
+    }
+    #site-banner.visible { display: block; }
+    #site-banner span { opacity: 0.6; margin: 0 12px; }
+    #banner-close {
+      position: absolute;
+      right: 20px; top: 50%;
+      transform: translateY(-50%);
+      background: none; border: none;
+      color: #c8a96e; cursor: pointer;
+      font-size: 1rem; opacity: 0.6;
+      line-height: 1;
+    }
+    #banner-close:hover { opacity: 1; }
+    @media (max-width: 768px) {
+      #site-banner { padding: 10px 40px 10px 16px; font-size: 0.7rem; text-align: left; }
+    }
   </style>
 </head>
 <body>
@@ -1896,6 +1926,14 @@
   <div id="page-transition"></div>
   <div id="cursor"></div>
   <div id="cursor-ring"></div>
+
+  <!-- BANNIÈRE -->
+  <div id="site-banner">
+    <span id="banner-sep">·</span>
+    <span id="banner-msg"></span>
+    <span id="banner-sep2">·</span>
+    <button id="banner-close" onclick="document.getElementById('site-banner').classList.remove('visible')" aria-label="Fermer">×</button>
+  </div>
 
   <!-- NAV -->
   <nav id="navbar">
@@ -2995,6 +3033,41 @@
       }
     });
 
+    // ── Statut disponibilité + bannière depuis status.json ──
+    fetch('status.json?t=' + Date.now())
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        // Badge disponibilité
+        var badge = document.getElementById('availBadge');
+        var dot   = document.getElementById('availDot');
+        var txt   = document.getElementById('availText');
+        if (badge) {
+          if (data.available) {
+            badge.classList.remove('unavailable');
+            dot.style.background = '';
+            dot.style.boxShadow  = '';
+            dot.style.animation  = '';
+            txt.textContent      = 'Disponible';
+          } else {
+            badge.classList.add('unavailable');
+            dot.style.background = '#e05c5c';
+            dot.style.boxShadow  = '0 0 6px #e05c5c';
+            dot.style.animation  = 'none';
+            txt.textContent      = 'Indisponible';
+          }
+        }
+        // Bannière
+        var banner = data.banner;
+        if (banner && banner.active && banner.text) {
+          var el = document.getElementById('site-banner');
+          var msg = document.getElementById('banner-msg');
+          if (el && msg) {
+            msg.textContent = banner.text;
+            el.classList.add('visible');
+          }
+        }
+      })
+      .catch(function() {});
     // ── Smooth scroll ──
     document.querySelectorAll('a[href^="#"]').forEach(function(a) {
       a.addEventListener('click', function(e) {
