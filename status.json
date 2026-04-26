@@ -1,7 +1,3 @@
 {
-  "available": true,
-  "banner": {
-    "active": true,
-    "text": "Hello ! Je m'appelle Olivier et je suis basÃ© Ã  Fribourg !"
-  }
+  "available": false
 }
