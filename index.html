@@ -1885,6 +1885,9 @@
       }
     }
 
+
+    .nav-availability.unavailable { border-color: rgba(224,92,92,0.3); }
+    .nav-availability.unavailable .nav-avail-dot { background: #e05c5c; box-shadow: 0 0 6px #e05c5c; animation: none; }
   </style>
 </head>
 <body>
@@ -1902,7 +1905,7 @@
       <li><a href="#about">À propos</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
-    <div class="nav-availability"><span class="nav-avail-dot"></span>Disponible</div>
+    <div class="nav-availability" id="availBadge"><span class="nav-avail-dot" id="availDot"></span><span id="availText">Disponible</span></div>
     <a class="nav-cta" href="#contact">Démarrer un projet</a>
     <div class="burger" id="burger" onclick="toggleMenu()">
       <span></span><span></span><span></span>
@@ -3003,6 +3006,19 @@
         }
       });
     });
+
+    // ── Disponibilité dynamique ──
+    fetch('/status.json')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var badge = document.getElementById('availBadge');
+        var text  = document.getElementById('availText');
+        if (!data.available) {
+          badge.classList.add('unavailable');
+          text.textContent = 'Indisponible';
+        }
+      })
+      .catch(function() {});
 
   </script>
 </body>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Focus Production</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080808;
+      --bg2: #0f0f0f;
+      --bg3: #161616;
+      --text: #e8e2d9;
+      --text-muted: #8a8480;
+      --gold: #c8a96e;
+      --gold-dim: rgba(200,169,110,0.15);
+      --teal: #3abcb1;
+      --border: rgba(232,226,217,0.08);
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+    }
+
+    /* Grain */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .logo {
+      font-family: var(--serif);
+      font-size: 2.2rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .logo span { color: var(--gold); }
+
+    .subtitle {
+      font-size: 0.62rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .gold-line {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      margin: 16px auto;
+    }
+
+    /* Card */
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 40px;
+      position: relative;
+    }
+
+    /* Corner marks */
+    .card::before, .card::after {
+      content: '';
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-color: var(--gold);
+      border-style: solid;
+      opacity: 0.5;
+    }
+    .card::before { top: 8px; left: 8px; border-width: 1px 0 0 1px; }
+    .card::after  { bottom: 8px; right: 8px; border-width: 0 1px 1px 0; }
+
+    .card-title {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      margin-bottom: 24px;
+      color: var(--text-muted);
+    }
+
+    /* Form */
+    .field { margin-bottom: 20px; }
+
+    label {
+      display: block;
+      font-size: 0.62rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    input[type="password"],
+    input[type="text"] {
+      width: 100%;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    input:focus { border-color: rgba(200,169,110,0.4); }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background: none;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+      margin-top: 8px;
+    }
+
+    .btn:hover { background: var(--gold-dim); }
+    .btn:active { background: rgba(200,169,110,0.25); }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--bg);
+    }
+    .btn-primary:hover { background: #d4b87a; }
+
+    /* Status panel */
+    #panel { display: none; }
+
+    .status-display {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 24px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .status-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      transition: background 0.4s;
+    }
+    .status-dot.available   { background: var(--teal); box-shadow: 0 0 8px var(--teal); }
+    .status-dot.unavailable { background: #e05c5c; box-shadow: 0 0 8px #e05c5c; }
+
+    .status-text {
+      flex: 1;
+    }
+    .status-label {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 300;
+    }
+    .status-desc {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .btn-available   { border-color: var(--teal); color: var(--teal); }
+    .btn-available:hover { background: rgba(58,188,177,0.1); }
+    .btn-available.active { background: var(--teal); color: var(--bg); }
+
+    .btn-unavailable { border-color: #e05c5c; color: #e05c5c; }
+    .btn-unavailable:hover { background: rgba(224,92,92,0.1); }
+    .btn-unavailable.active { background: #e05c5c; color: #fff; }
+
+    .saving {
+      text-align: center;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      opacity: 0;
+      transition: opacity 0.3s;
+      margin-top: 8px;
+      min-height: 20px;
+    }
+    .saving.show { opacity: 1; }
+    .saving.success { color: var(--teal); }
+    .saving.error   { color: #e05c5c; }
+
+    /* Token hint */
+    .hint {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .hint a { color: var(--gold); text-decoration: none; }
+
+    /* Error */
+    .error-msg {
+      color: #e05c5c;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      margin-top: 8px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="logo">FOCUS<span>_</span>PRODUCTION</div>
+    <div class="gold-line"></div>
+    <div class="subtitle">Panneau d'administration</div>
+  </div>
+
+  <!-- LOGIN -->
+  <div class="card" id="login">
+    <div class="card-title">Connexion</div>
+
+    <div class="field">
+      <label>Mot de passe</label>
+      <input type="password" id="pwd" placeholder="••••••••" onkeydown="if(event.key==='Enter') login()">
+    </div>
+
+    <div class="field">
+      <label>GitHub Token <span style="color:var(--gold);font-size:0.6rem;">(stocké localement, jamais transmis)</span></label>
+      <input type="password" id="token" placeholder="github_pat_..." onkeydown="if(event.key==='Enter') login()">
+    </div>
+
+    <button class="btn btn-primary" onclick="login()">Accéder</button>
+    <div class="error-msg" id="err">Mot de passe incorrect.</div>
+
+    <div class="hint">
+      Le token GitHub est sauvegardé dans ton navigateur. Tu n'auras à le saisir qu'une seule fois.<br><br>
+      <a href="https://github.com/settings/tokens" target="_blank">Générer un token →</a>
+      (Permissions : Contents → Read and write)
+    </div>
+  </div>
+
+  <!-- PANEL -->
+  <div class="card" id="panel">
+    <div class="card-title">Statut de disponibilité</div>
+
+    <div class="status-display">
+      <div class="status-dot" id="dot"></div>
+      <div class="status-text">
+        <div class="status-label" id="statusLabel">—</div>
+        <div class="status-desc" id="statusDesc">Chargement…</div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-available" id="btnAvail" onclick="setStatus(true)">✓ Disponible</button>
+      <button class="btn btn-unavailable" id="btnUnavail" onclick="setStatus(false)">✕ Indisponible</button>
+    </div>
+
+    <div class="saving" id="saving">Enregistrement…</div>
+
+    <button class="btn" onclick="logout()" style="margin-top:16px;font-size:0.65rem;opacity:0.5;">Déconnexion</button>
+  </div>
+
+</div>
+
+<script>
+  var PASS     = '5251';
+  var OWNER    = 'OlivierShapiro';
+  var REPO     = 'focus-production-website';
+  var FILE     = 'status.json';
+  var BRANCH   = 'main';
+
+  var token = '';
+  var currentSha = '';
+  var currentStatus = null;
+
+  // ── Login ──
+  function login() {
+    var pwd   = document.getElementById('pwd').value;
+    var tkn   = document.getElementById('token').value.trim();
+
+    if (pwd !== PASS) {
+      document.getElementById('err').style.display = 'block';
+      return;
+    }
+    if (!tkn) {
+      alert('Entre ton token GitHub.');
+      return;
+    }
+
+    token = tkn;
+    localStorage.setItem('fp_token', token);
+
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('panel').style.display  = 'block';
+    fetchStatus();
+  }
+
+  // ── Auto-fill token ──
+  var saved = localStorage.getItem('fp_token');
+  if (saved) document.getElementById('token').value = saved;
+
+  // ── Fetch current status.json ──
+  function fetchStatus() {
+    var url = 'https://api.github.com/repos/' + OWNER + '/' + REPO + '/contents/' + FILE + '?ref=' + BRANCH;
+    fetch(url, { headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json' } })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        currentSha = data.sha;
+        var content = JSON.parse(atob(data.content.replace(/\n/g, '')));
+        currentStatus = content.available;
+        renderStatus(currentStatus);
+      })
+      .catch(function() {
+        document.getElementById('statusDesc').textContent = 'Erreur de chargement — vérifie ton token.';
+      });
+  }
+
+  // ── Render status ──
+  function renderStatus(available) {
+    var dot    = document.getElementById('dot');
+    var label  = document.getElementById('statusLabel');
+    var desc   = document.getElementById('statusDesc');
+    var bAvail = document.getElementById('btnAvail');
+    var bUnavail = document.getElementById('btnUnavail');
+
+    if (available) {
+      dot.className      = 'status-dot available';
+      label.textContent  = 'Disponible';
+      desc.textContent   = 'Le badge vert s\'affiche sur le site.';
+      bAvail.classList.add('active');
+      bUnavail.classList.remove('active');
+    } else {
+      dot.className      = 'status-dot unavailable';
+      label.textContent  = 'Indisponible';
+      desc.textContent   = 'Le badge rouge s\'affiche sur le site.';
+      bUnavail.classList.add('active');
+      bAvail.classList.remove('active');
+    }
+  }
+
+  // ── Set status ──
+  function setStatus(available) {
+    if (available === currentStatus) return;
+
+    var saving = document.getElementById('saving');
+    saving.textContent  = 'Enregistrement…';
+    saving.className    = 'saving show';
+
+    var newContent = btoa(JSON.stringify({ available: available }));
+    var url = 'https://api.github.com/repos/' + OWNER + '/' + REPO + '/contents/' + FILE;
+
+    fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Accept': 'application/vnd.github+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: 'chore: update availability status',
+        content: newContent,
+        sha: currentSha,
+        branch: BRANCH
+      })
+    })
+    .then(function(r) {
+      if (!r.ok) throw new Error(r.status);
+      return r.json();
+    })
+    .then(function(data) {
+      currentSha    = data.content.sha;
+      currentStatus = available;
+      renderStatus(available);
+      saving.textContent = '✓ Enregistré — site mis à jour dans ~30s';
+      saving.className   = 'saving show success';
+      setTimeout(function() { saving.className = 'saving'; }, 4000);
+    })
+    .catch(function(e) {
+      saving.textContent = '✕ Erreur — vérifie ton token.';
+      saving.className   = 'saving show error';
+      setTimeout(function() { saving.className = 'saving'; }, 4000);
+    });
+  }
+
+  // ── Logout ──
+  function logout() {
+    localStorage.removeItem('fp_token');
+    location.reload();
+  }
+</script>
+
+</body>
+</html>
