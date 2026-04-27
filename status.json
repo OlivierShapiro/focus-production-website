@@ -1,7 +1,3 @@
 {
-  "available": true,
-  "banner": {
-    "active": true,
-    "text": "Hello ! Je suis si jamais à la recherche de sportifs dans le but de leur faire un documentaire"
-  }
+  "available": false
 }
