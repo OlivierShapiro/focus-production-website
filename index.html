@@ -1867,16 +1867,12 @@
     .proj-card-placeholder .proj-play { display: none !important; }
   
     /* ── Vue filtrée — cartes uniformes ── */
-    .portfolio-grid.filtered-mode .proj-card:not(.filtered-out) {
+    .portfolio-grid.filtered-mode .proj-card:not(.filtered-out):not(.snack-vertical) {
       grid-column: span 6 !important;
       grid-row: span 1 !important;
       aspect-ratio: 16/9;
     }
-    .portfolio-grid.filtered-mode .proj-card:not(.filtered-out) .proj-img {
-      width: 100%;
-      height: 100%;
-      aspect-ratio: unset;
-    }
+    
     @media (max-width: 768px) {
       .portfolio-grid.filtered-mode .proj-card:not(.filtered-out) {
         grid-column: span 12 !important;
@@ -1925,6 +1921,36 @@
     #banner-close:hover { color: #c8a96e; }
     @media (max-width: 768px) {
       #site-banner { right: 12px; top: 120px; max-width: 200px; }
+    }
+
+    
+
+    /* ── Snack Content — format vertical 9:16 ── */
+    /* 3 cartes côte à côte = span 4 sur grille 12 cols */
+    .portfolio-grid .proj-card.snack-vertical,
+    .portfolio-grid.filtered-mode .proj-card.snack-vertical:not(.filtered-out) {
+      grid-column: span 4 !important;
+      grid-row: span 1 !important;
+      aspect-ratio: 9 / 16 !important;
+    }
+    .portfolio-grid .proj-card.snack-vertical .proj-img,
+    .portfolio-grid .proj-card.snack-vertical .snack-img {
+      width: 100% !important;
+      height: 100% !important;
+      aspect-ratio: 9 / 16 !important;
+      object-fit: cover !important;
+    }
+    @media (max-width: 900px) {
+      .portfolio-grid .proj-card.snack-vertical,
+      .portfolio-grid.filtered-mode .proj-card.snack-vertical:not(.filtered-out) {
+        grid-column: span 6 !important;
+      }
+    }
+    @media (max-width: 600px) {
+      .portfolio-grid .proj-card.snack-vertical,
+      .portfolio-grid.filtered-mode .proj-card.snack-vertical:not(.filtered-out) {
+        grid-column: span 12 !important;
+      }
     }
   </style>
 </head>
@@ -2134,7 +2160,7 @@
       <h2 class="section-title">Mes <em>réalisations</em></h2>
     </div>
     <div class="filter-tabs reveal">
-      <button class="filter-tab active" onclick="filterProjects('all',this)">Tout</button>
+      <button class="filter-tab active" onclick="filterProjects('all',this)">Best Of</button>
       <button class="filter-tab" onclick="filterProjects('brand',this)">Brand Film</button>
       <button class="filter-tab" onclick="filterProjects('pub',this)">Publicité</button>
       <button class="filter-tab" onclick="filterProjects('corporate',this)">Film Corporate</button>
@@ -2192,8 +2218,35 @@
           <span class="proj-link teal-link">▶ Voir le film</span>
         </div>
       </div>
-    </div>
-    </section>
+
+      <!-- BTS IMPORTANCE — Snack Content Vertical -->
+      <div class="proj-card snack-vertical reveal" data-cat="snack" data-youtube="qBH4YB5BSik" data-global="false">
+        <div class="proj-play"></div>
+        <img loading="lazy" class="proj-img snack-img" src="https://img.youtube.com/vi/qBH4YB5BSik/maxresdefault.jpg" alt="L'importance des BTS" onerror="this.src='https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=600&q=80'">
+        <div class="proj-overlay">
+          <span class="proj-category">Snack Content · BTS</span>
+          <h3 class="proj-title">L'importance<br>des BTS</h3>
+          <span class="proj-link teal-link">▶ Voir</span>
+        </div>
+      </div>
+
+      <!-- SNACK PLACEHOLDER 1 -->
+      <div class="proj-card snack-vertical" data-cat="snack" data-global="false" style="cursor:default;">
+        <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;opacity:0.25;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c8a96e" stroke-width="1.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span style="font-family:'DM Sans',sans-serif;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8a96e;">À venir</span>
+        </div>
+      </div>
+
+      <!-- SNACK PLACEHOLDER 2 -->
+      <div class="proj-card snack-vertical" data-cat="snack" data-global="false" style="cursor:default;">
+        <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;opacity:0.25;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c8a96e" stroke-width="1.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span style="font-family:'DM Sans',sans-serif;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:#c8a96e;">À venir</span>
+        </div>
+      </div>
+
+    </div></section>
 
   <!-- SERVICES -->
   <section id="services">
@@ -2822,7 +2875,8 @@
       var grid = document.querySelector('.portfolio-grid');
       grid.classList.toggle('filtered-mode', cat !== 'all');
       document.querySelectorAll('.proj-card').forEach(function(card) {
-        var match = cat === 'all' || card.dataset.cat === cat;
+        var isGlobalExcluded = card.dataset.global === 'false';
+        var match = (cat === 'all' && !isGlobalExcluded) || card.dataset.cat === cat;
         if (match) {
           card.classList.remove('filtered-out');
         } else {
@@ -2842,7 +2896,7 @@
     // ══════════════════════════════════════════
     // PROJECTS MODAL
     // ══════════════════════════════════════════
-    var projectsData = [{"id":"the-dancer","vimeo":"1159587581","cat":"Cinématique · Danse","title":"The Dancer — Anya","desc":"Un showreel réalisé avec Anya, danseuse professionnelle. L'objectif était de capturer l'expressivité des mouvements de la danseuse, de ses émotions.\nQu'est-ce qu'elle veut raconter à travers sa dance ?\nDans une lumière naturelle à contre jour, ainsi qu'une Key-light de côté pour éclairer le sujet et renforcer un contraste de lumière qui amplifie la pression que l'on ressent en la voyant danser. Une musique de NF qui rajoute des frissons, et un étalonnage bleu froid à l'aide de DaVinci Resolve pour renforcer l'atmosphère émotionnelle.\n\nMerci à Anya d'avoir eu la volonté de travailler avec moi !","tags":["Brand Film","Cinématique","Danse"],"info":[["Type","Film cinématique"],["Rôle","Réalisation, montage, color grading"],["Outil","DaVinci Resolve"],["Lieu","Suisse Romande"]],"type":"vimeo"},{"id":"entre-videastes","vimeo":"1152969970","cat":"Cinématique · Collaboration","title":"Entre Vidéastes","desc":"Une sortie avec @elouan_films sur Bulle. Deux vidéastes, une ville, une journée à se balader et shooter tout ce qu'on trouvait beau. Pas de brief, pas de client — juste l'envie d'explorer et de trouver de beaux plans ensemble. C'est exactement ce genre de projets qui nous fait avancer.","tags":["Non classé","Cinématique","Collab"],"info":[["Type","Projet personnel"],["Collab","@elouan_films"],["Lieu","Bulle, Fribourg"],["Format","Court-métrage"]],"type":"vimeo"},{"id":"problem-time","youtube":"QBG_90-UPm4","cat":"Cinématique · Test caméra","title":"The problem is you think you have Time","desc":"Test et exploration des capacités de la nouvelle Zihyun G200. Un projet de recherche visuelle qui sert aussi de démonstration des possibilités créatives que je peux me permettre grâce à cette lumière.","tags":["Non classé","Cinématique","Test caméra"],"info":[["Type","Test caméra / Court"],["Matériel","Zihyun G200"],["Rôle","Réalisation, montage"],["Format","Short film"]],"type":"youtube"},{"id":"mpfootperf","title":"MPfootperf.","cat":"Brand Film · Football","tags":["Brand Film","Football","Cinématique"],"youtube":"OF1te3PmTEY","type":"youtube","desc":"Un projet réalisé en collaboration avec MPfootperf. et 1700Fribourg. On s'est retrouvé sur le terrain pour capturer ce que c'est vraiment, l'entraînement, l'intensité, la relation entre le coach et ses joueurs. Tourné à Fribourg, étalonnage sur DaVinci Resolve. Merci à eux pour la confiance !","info":[["Type","Vidéo sportive"],["Rôle","Réalisation, color grading, montage"],["Outils","DaVinci Resolve · Canon EOS M50 Mark II · Canon 15-85mm · DJI RS3 Mini"],["Lieu","Fribourg"],["Client","MPfootperf."],["Collaboration","1700Frib"]]},{"id":"webacces","title":"WebAcces — La Lorraine","cat":"Film Corporate · Ferme","tags":["Film Corporate","Extérieur","WebAcces"],"type":"youtube","youtube":"Dr0IawbuiX8","desc":"Retour du tournage corporate pour WebAcces à la ferme La Lorraine. Ce fut une grosse expérience. Merci de leur accueil et de nous avoir fait confiance ! Le droniste Arnaud Charrière (@arnaud_drone) était également présent pour m'aider dans ce projet, pour le tournage. Merci à lui.","info":[["Type","Extérieur, ferme"],["Matériel","Canon EOS M50 Mark II"],["Rôle","Réalisation, tournage, montage"],["Format","Short film Corporate"],["Client","WebAcces"],["Drone","Arnaud Charrière (@arnaud_drone)"]]}];
+    var projectsData = [{"id":"the-dancer","vimeo":"1159587581","cat":"Cinématique · Danse","title":"The Dancer — Anya","desc":"Un showreel réalisé avec Anya, danseuse professionnelle. L'objectif était de capturer l'expressivité des mouvements de la danseuse, de ses émotions.\nQu'est-ce qu'elle veut raconter à travers sa dance ?\nDans une lumière naturelle à contre jour, ainsi qu'une Key-light de côté pour éclairer le sujet et renforcer un contraste de lumière qui amplifie la pression que l'on ressent en la voyant danser. Une musique de NF qui rajoute des frissons, et un étalonnage bleu froid à l'aide de DaVinci Resolve pour renforcer l'atmosphère émotionnelle.\n\nMerci à Anya d'avoir eu la volonté de travailler avec moi !","tags":["Brand Film","Cinématique","Danse"],"info":[["Type","Film cinématique"],["Rôle","Réalisation, montage, color grading"],["Outil","DaVinci Resolve"],["Lieu","Suisse Romande"]],"type":"vimeo"},{"id":"entre-videastes","vimeo":"1152969970","cat":"Cinématique · Collaboration","title":"Entre Vidéastes","desc":"Une sortie avec @elouan_films sur Bulle. Deux vidéastes, une ville, une journée à se balader et shooter tout ce qu'on trouvait beau. Pas de brief, pas de client — juste l'envie d'explorer et de trouver de beaux plans ensemble. C'est exactement ce genre de projets qui nous fait avancer.","tags":["Non classé","Cinématique","Collab"],"info":[["Type","Projet personnel"],["Collab","@elouan_films"],["Lieu","Bulle, Fribourg"],["Format","Court-métrage"]],"type":"vimeo"},{"id":"problem-time","youtube":"QBG_90-UPm4","cat":"Cinématique · Test caméra","title":"The problem is you think you have Time","desc":"Test et exploration des capacités de la nouvelle Zihyun G200. Un projet de recherche visuelle qui sert aussi de démonstration des possibilités créatives que je peux me permettre grâce à cette lumière.","tags":["Non classé","Cinématique","Test caméra"],"info":[["Type","Test caméra / Court"],["Matériel","Zihyun G200"],["Rôle","Réalisation, montage"],["Format","Short film"]],"type":"youtube"},{"id":"mpfootperf","title":"MPfootperf.","cat":"Brand Film · Football","tags":["Brand Film","Football","Cinématique"],"youtube":"OF1te3PmTEY","type":"youtube","desc":"Un projet réalisé en collaboration avec MPfootperf. et 1700Fribourg. On s'est retrouvé sur le terrain pour capturer ce que c'est vraiment, l'entraînement, l'intensité, la relation entre le coach et ses joueurs. Tourné à Fribourg, étalonnage sur DaVinci Resolve. Merci à eux pour la confiance !","info":[["Type","Vidéo sportive"],["Rôle","Réalisation, color grading, montage"],["Outils","DaVinci Resolve · Canon EOS M50 Mark II · Canon 15-85mm · DJI RS3 Mini"],["Lieu","Fribourg"],["Client","MPfootperf."],["Collaboration","1700Frib"]]},{"id":"webacces","title":"WebAcces — La Lorraine","cat":"Film Corporate · Ferme","tags":["Film Corporate","Extérieur","WebAcces"],"type":"youtube","youtube":"Dr0IawbuiX8","desc":"Retour du tournage corporate pour WebAcces à la ferme La Lorraine. Ce fut une grosse expérience. Merci de leur accueil et de nous avoir fait confiance ! Le droniste Arnaud Charrière (@arnaud_drone) était également présent pour m'aider dans ce projet, pour le tournage. Merci à lui.","info":[["Type","Extérieur, ferme"],["Matériel","Canon EOS M50 Mark II"],["Rôle","Réalisation, tournage, montage"],["Format","Short film Corporate"],["Client","WebAcces"],["Drone","Arnaud Charrière (@arnaud_drone)"]]},{"id":"bts-importance","title":"L'importance des BTS","cat":"Snack Content","tags":["Snack Content","BTS","Vertical"],"type":"youtube","youtube":"qBH4YB5BSik","desc":"Une vidéo sur l'importance des coulisses, sur tout ce qu'on devrait montrer plus. Filmer le vrai, pas seulement le résultat.","info":[["Type","Snack Content · BTS"],["Matériel","Canon EOS M50 Mark II · Insta360 X5"],["Rôle","BTS, color grading"],["Format","Vertical 9:16"]]}];
     var currentProjectIndex = 0;
 
     function openProject(projectId) {
@@ -2917,7 +2971,8 @@
         var map = {
           'OF1te3PmTEY': 'mpfootperf',
           'QBG_90-UPm4': 'problem-time',
-          'Dr0IawbuiX8': 'webacces'
+          'Dr0IawbuiX8': 'webacces',
+          'qBH4YB5BSik': 'bts-importance'
         };
         if (map[ytId]) openProject(map[ytId]);
       });
@@ -3076,6 +3131,12 @@
     document.getElementById('banner-close') && document.getElementById('banner-close').addEventListener('click', function() {
       document.getElementById('site-banner').classList.remove('visible');
     });
+    // ── Init filtres au chargement ──
+    (function() {
+      var firstTab = document.querySelector('.filter-tab');
+      if (firstTab) filterProjects('all', firstTab);
+    })();
+
     // ── Smooth scroll ──
     document.querySelectorAll('a[href^="#"]').forEach(function(a) {
       a.addEventListener('click', function(e) {
