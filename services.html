@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23080808'/%3E%3Ctext x='6' y='25' font-family='Georgia,serif' font-size='22' font-weight='bold' fill='%23c8a96e'%3EF%3C/text%3E%3C/svg%3E">
+  <title>Services — Focus Production</title>
+  <meta name="description" content="Services de production vidéo — Brand film, publicité, sport, contenu social, micro-documentaire et film événementiel. Fribourg, Suisse romande.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://focus--production.vercel.app/services">
+  <meta property="og:title" content="Services — Focus Production">
+  <meta property="og:description" content="Brand film, publicité, sport & dynamisme, contenu social, micro-documentaire, film événementiel.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://focus--production.vercel.app/services">
+  <meta name="theme-color" content="#080808">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+  <div id="scroll-progress"></div>
+  <div id="page-transition"></div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a class="nav-logo" href="/">FOCUS<span>_</span>PRODUCTION</a>
+    <ul class="nav-links">
+      <li><a href="/portfolio">Portfolio</a></li>
+      <li><a href="/services" class="active">Services</a></li>
+      <li><a href="/#about">À propos</a></li>
+      <li><a href="/#faq">FAQ</a></li>
+    </ul>
+    <div class="nav-availability" id="availBadge"><span class="nav-avail-dot" id="availDot"></span><span id="availText">Disponible</span></div>
+    <a class="nav-cta" href="/contact">Démarrer un projet</a>
+    <div class="burger" id="burger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/portfolio" onclick="toggleMenu()">Portfolio</a>
+    <a href="/services" onclick="toggleMenu()">Services</a>
+    <a href="/#about" onclick="toggleMenu()">À propos</a>
+    <a href="/#faq" onclick="toggleMenu()">FAQ</a>
+    <a href="/contact" class="mobile-menu-cta" onclick="toggleMenu()">Démarrer un projet</a>
+  </div>
+
+  <!-- PAGE HEADER -->
+  <section style="padding: 160px 64px 60px; position: relative; overflow: hidden;">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 20% 50%, rgba(196,124,46,0.06) 0%, transparent 70%);pointer-events:none;"></div>
+    <div class="section-label reveal">Ce que je fais</div>
+    <h1 class="section-title reveal" style="font-size:clamp(2.8rem,6vw,5rem);max-width:700px;">Des formats pour <em>chaque histoire</em></h1>
+    <p class="reveal" style="font-family:var(--sans);font-size:0.95rem;color:var(--text-secondary);max-width:500px;margin-top:16px;line-height:1.7;">Brand film, publicité, documentaire, contenu social — je maîtrise l'ensemble du pipeline de A à Z.</p>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" style="padding: 0 64px 80px;">
+    <div class="services-grid">
+      <div class="service-item reveal"><div class="service-num">01</div><h3 class="service-name">Brand Film <span style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);font-family:var(--sans);font-style:normal;margin-left:8px;border:1px solid rgba(200,169,110,0.4);padding:2px 8px;vertical-align:middle;">Spécialité</span></h3><p class="service-desc">C'est là que je performe le mieux. Je construis une narration complète autour de votre marque ou entreprise pour créer une connexion et faire passer un message clair. Ce n'est pas un simple film d'entreprise, mais une vraie histoire qui vous représente.</p><div class="service-tags"><span class="service-tag">Brand Identity</span><span class="service-tag">Storytelling</span><span class="service-tag">Narration</span><span class="service-tag">Corporate</span></div></div>
+      <div class="service-item reveal reveal-delay-1"><div class="service-num">02</div><h3 class="service-name">Publicité <span style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);font-family:var(--sans);font-style:normal;margin-left:8px;border:1px solid rgba(200,169,110,0.4);padding:2px 8px;vertical-align:middle;">Spécialité</span></h3><p class="service-desc">Des spots conçus pour capter l'attention en quelques secondes et laisser une empreinte. Je maîtrise l'ensemble du pipeline. Concept, direction, tournage, montage et étalonnage pour une publicité cohérente de A à Z.</p><div class="service-tags"><span class="service-tag">TV & Web</span><span class="service-tag">Spot 30s</span><span class="service-tag">Direction Créative</span><span class="service-tag">Color Grading</span></div></div>
+      <div class="service-item reveal reveal-delay-2"><div class="service-num teal">03</div><h3 class="service-name">Sport & Dynamisme <span style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);font-family:var(--sans);font-style:normal;margin-left:8px;border:1px solid rgba(200,169,110,0.4);padding:2px 8px;vertical-align:middle;">Spécialité</span></h3><p class="service-desc">Je capture la performance physique, l'effort, le coaching, l'entraînement, la compétition. Des vidéos qui transmettent la puissance, la discipline et la motivation de vos athlètes ou de vous en tant qu'athlète et de votre projet. Mon coup de cœur c'est de créer des biographies documentaires de sportifs.</p><div class="service-tags"><span class="service-tag">Sport</span><span class="service-tag">Performance</span><span class="service-tag">Coaching</span><span class="service-tag">Dynamisme</span></div></div>
+      <div class="service-item reveal reveal-delay-3"><div class="service-num">04</div><h3 class="service-name">Contenu Social</h3><p class="service-desc">Des reels, shorts, du contenu Instagram ou des tiktok pensés pour casser le scroll. Format court, impact maximum, cohérence esthétique avec votre identité de marque.</p><div class="service-tags"><span class="service-tag">Instagram</span><span class="service-tag">Reels</span><span class="service-tag">TikTok</span></div></div>
+      <div class="service-item reveal"><div class="service-num teal">05</div><h3 class="service-name">Micro-documentaire</h3><p class="service-desc">J'aime les histoires vraies, celles qui prennent le temps de montrer les gens tels qu'ils sont, pas ce qu'ils veulent qu'on voie. Un micro-documentaire c'est creuser un peu plus loin et ramener quelque chose d'honnête.</p><div class="service-tags"><span class="service-tag">Interview</span><span class="service-tag">Portrait</span><span class="service-tag">Terrain</span></div></div>
+      <div class="service-item reveal reveal-delay-1"><div class="service-num">06</div><h3 class="service-name">Film Événementiel</h3><p class="service-desc">Galas, conférences, lancements de produit, concessions, concerts…et sport évidement ! Je fais tout, des récaps, je capture des émotions, des retours, des performances</p><div class="service-tags"><span class="service-tag">Gala</span><span class="service-tag">Conférence</span><span class="service-tag">Launch</span></div></div>
+    </div>
+  </section>
+
+  <!-- TOOLS -->
+  <div class="tools-strip reveal">
+    <p class="tools-label">Outils & Technologies</p>
+    <div class="tools-list">
+      <span class="tool-item">DaVinci Resolve</span>
+      <span class="tool-item">Adobe Premiere Pro</span>
+      <span class="tool-item">After Effects</span>
+      <span class="tool-item">Lightroom</span>
+      <span class="tool-item">LUT Design</span>
+      <span class="tool-item">Sony Cinema Line</span>
+      <span class="tool-item">DJI Drone</span>
+      <span class="tool-item">Audio Post-Production</span>
+      <span class="tool-item">Motion Design</span>
+    </div>
+    <p style="margin-top:24px;">
+      <a href="https://tools.thoproduction.fr/materiel-professionnel/F0cusProduction" target="_blank" style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:color 0.2s;border-bottom:1px solid rgba(200,169,110,0.25);padding-bottom:3px;" onmouseover="this.style.color='var(--gold)';this.style.borderColor='var(--gold)'" onmouseout="this.style.color='var(--text-muted)';this.style.borderColor='rgba(200,169,110,0.25)'">Voir l'ensemble de mon matériel →</a>
+    </p>
+  </div>
+
+  <!-- CTA CONTACT -->
+  <section style="padding:80px 64px;text-align:center;border-top:1px solid var(--border);">
+    <div class="section-label reveal" style="justify-content:center;">Prêt à démarrer ?</div>
+    <h2 class="section-title reveal" style="font-size:clamp(2rem,4vw,3.2rem);margin:16px auto 32px;">Travaillons <em>ensemble.</em></h2>
+    <a class="btn-primary reveal" href="/contact">Démarrer une collaboration</a>
+  </section>
+
+  <!-- COOKIE NOTICE -->
+  <div id="cookie-notice">
+    <p class="cookie-text">Ce site utilise des cookies pour améliorer votre expérience. En continuant, vous acceptez leur utilisation conformément à la législation suisse.</p>
+    <div class="cookie-btns">
+      <button class="cookie-btn" onclick="acceptCookies()">Accepter</button>
+      <button class="cookie-btn-decline" onclick="declineCookies()">Refuser</button>
+    </div>
+  </div>
+
+  <!-- THEME TOGGLE -->
+  <div id="theme-toggle" onclick="toggleTheme()" title="Mode clair/sombre">☀</div>
+
+  <!-- BACK TO TOP -->
+  <div id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+  <!-- SITE BANNER -->
+  <div id="site-banner" style="display:none;"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <a class="footer-logo" href="/">FOCUS<span>_</span>PRODUCTION</a>
+    <div class="footer-socials">
+      <a class="footer-social" href="https://www.instagram.com/f0cus_prod/" target="_blank">Instagram</a>
+      <a class="footer-social" href="https://vimeo.com/user233951784" target="_blank">Vimeo</a>
+      <a class="footer-social" href="https://www.youtube.com/@Focus_production-OS/videos" target="_blank">YouTube</a>
+    </div>
+    <span class="footer-copy">© 2025 Focus Production · Olivier · Fribourg, Suisse</span>
+  </footer>
+
+  <script src="assets/js/animations.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

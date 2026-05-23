@@ -1,0 +1,210 @@
+/* ══════════════════════════════════════════════════════
+   FOCUS_PRODUCTION — animations.css
+   Keyframes, reveal system, stagger, transitions
+   ══════════════════════════════════════════════════════ */
+
+/* ── Keyframes ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scrollDown {
+  0%   { transform: translateY(-100%); opacity: 0; }
+  30%  { opacity: 1; }
+  100% { transform: translateY(200%); opacity: 0; }
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.8); }
+}
+
+@keyframes grain-drift {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(-1%, 1%); }
+  50%  { transform: translate(1%, -1%); }
+  75%  { transform: translate(-1%, -1%); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes pageReveal {
+  0%   { opacity: 1; }
+  60%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes tapRipple {
+  from { opacity: 1; transform: scale(0.5); }
+  to   { opacity: 0; transform: scale(2); }
+}
+
+/* ── Système de reveal au scroll ── */
+/* Par défaut visible (no-JS fallback) */
+.reveal {
+  opacity: 1;
+  transform: none;
+}
+
+/* Avec JS actif, on reset puis on révèle */
+.js-ready .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.js-ready .reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.js-ready .reveal-delay-1 { transition-delay: 0.1s; }
+.js-ready .reveal-delay-2 { transition-delay: 0.2s; }
+.js-ready .reveal-delay-3 { transition-delay: 0.3s; }
+.js-ready .reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── Stagger — service items ── */
+.js-ready .service-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.js-ready .service-item.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.js-ready .service-item:nth-child(1) { transition-delay: 0s; }
+.js-ready .service-item:nth-child(2) { transition-delay: 0.08s; }
+.js-ready .service-item:nth-child(3) { transition-delay: 0.16s; }
+.js-ready .service-item:nth-child(4) { transition-delay: 0.24s; }
+.js-ready .service-item:nth-child(5) { transition-delay: 0.32s; }
+.js-ready .service-item:nth-child(6) { transition-delay: 0.40s; }
+
+/* ── Stagger — process steps ── */
+.js-ready .process-step {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.js-ready .process-step.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.js-ready .process-step:nth-child(1) { transition-delay: 0s; }
+.js-ready .process-step:nth-child(2) { transition-delay: 0.1s; }
+.js-ready .process-step:nth-child(3) { transition-delay: 0.2s; }
+.js-ready .process-step:nth-child(4) { transition-delay: 0.3s; }
+
+/* ── Stagger — testimonials ── */
+.js-ready .testi-card {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.js-ready .testi-card.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.js-ready .testi-card:nth-child(1) { transition-delay: 0s; }
+.js-ready .testi-card:nth-child(2) { transition-delay: 0.12s; }
+.js-ready .testi-card:nth-child(3) { transition-delay: 0.24s; }
+
+/* ── Stagger — portfolio cards ── */
+.js-ready .proj-card {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.js-ready .proj-card.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.js-ready .proj-card:nth-child(1) { transition-delay: 0s; }
+.js-ready .proj-card:nth-child(2) { transition-delay: 0.08s; }
+.js-ready .proj-card:nth-child(3) { transition-delay: 0.16s; }
+.js-ready .proj-card:nth-child(4) { transition-delay: 0.24s; }
+.js-ready .proj-card:nth-child(5) { transition-delay: 0.32s; }
+.js-ready .proj-card:nth-child(6) { transition-delay: 0.40s; }
+.js-ready .proj-card:nth-child(7) { transition-delay: 0.48s; }
+
+/* Filtered-out override */
+.proj-card.filtered-out {
+  display: none !important;
+}
+
+/* ── Hero animations (CSS, appliquées sans JS) ── */
+.hero-tag {
+  opacity: 0;
+  animation: fadeUp 0.8s 0.3s forwards;
+}
+
+.hero-title {
+  opacity: 0;
+  animation: fadeUp 0.9s 0.5s forwards;
+}
+
+.hero-sub {
+  opacity: 0;
+  animation: fadeUp 0.9s 0.7s forwards;
+}
+
+.hero-actions {
+  opacity: 0;
+  animation: fadeUp 0.9s 0.9s forwards;
+}
+
+.hero-scroll {
+  opacity: 0;
+  animation: fadeIn 1s 1.2s forwards;
+}
+
+.hero-stats {
+  opacity: 0;
+  animation: fadeIn 1s 1s forwards;
+}
+
+/* ── Transitions images portfolios ── */
+.proj-img {
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.5s, opacity 0.3s;
+}
+
+/* ── Testi card hover lift ── */
+.testi-card {
+  transition: border-color 0.3s ease, transform 0.3s ease, background 0.3s ease;
+}
+
+.testi-card:hover {
+  transform: translateY(-4px);
+}
+
+/* ── About image zoom ── */
+.about-img-main {
+  transition: transform 0.8s ease, filter 0.4s;
+}
+
+.about-visual:hover .about-img-main {
+  transform: scale(1.02);
+}
+
+/* ── Section label line grow ── */
+.js-ready .reveal.visible .section-label::before {
+  width: 40px;
+}
